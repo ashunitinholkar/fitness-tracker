@@ -318,11 +318,11 @@ async function submitLog() {
   var scriptUrl = getScriptUrl();
   if (scriptUrl) {
     try {
-      await fetch(scriptUrl, {
-        method:'POST', mode:'no-cors',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(entry)
-      });
+      var params = Object.keys(entry).map(function(k){
+        return encodeURIComponent(k) + '=' + encodeURIComponent(entry[k] || '');
+      }).join('&');
+      var img = new Image();
+      img.src = scriptUrl + '?' + params;
     } catch(e) {}
   }
 
